@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>E-Commerce Navbar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+ :root {
+      --brand-color: #111827;     
+      --brand-hover: #111827;     
+      --bg-color: #ffffff;       
+      --text-color: #374151;      
+      --border-color: #438ac8;   
+    }
+
+    
+    .btn-login {
+      border: 1px solid var(--brand-color);
+      color: var(--brand-color);
+      background: transparent;
+    }
+
+    .btn-login:hover {
+      background-color: #438ac8;
+      color: #ffffff;
+    }
+
+    .btn-signup {
+      background-color:#3673a9;
+      color: #fff;
+    }
+
+    .btn-signup:hover {
+      background-color:#438ac8;
+      color: #fff;
+    }
+
+    footer {
+      background-color: #438ac8;
+      padding: 10px;
+      text-align: center;
+      color: white;
+    }
+
+    .login-wrapper {
+      min-height: calc(100vh - 110px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #ffffff);
+    }
+
+    .login-box {
+      background: #438ac8;
+      padding: 25px;
+      border-radius: 10px;
+      width: 340px;
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Changed heading text to white */
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    /* Changed label text to white */
+    .login-box label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #ffffff;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #64B9B9;
+      box-shadow: 0 0 0 2px rgba(100,185,185,0.25);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background-color:#3673a9;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #438ac8;
+    }
+
+    .message {
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom py-3">
+  <div class="container">
+
+    <a class="navbar-brand fs-4" href="#"></a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav mx-auto gap-4">
+      </ul>
+
+      
+    </div>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="login-wrapper">
+
+  <div class="login-box">
+
+    <h2>Log In</h2>
+
+    <form method="post" action="login.php">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+     
+
+      
+
+    
+
+    </form>
+
+  </div>
+
+</div>
+
+</body>
+</html>

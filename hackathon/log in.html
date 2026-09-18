@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Employee & Manager</title>
+
+  <style>
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9fc;
+    }
+
+    /* Main container */
+    .role-section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .role-container {
+      display: flex;
+      gap: 40px;
+      width: 80%;
+      max-width: 900px;
+    }
+
+    /* Role boxes */
+    .role-box {
+      flex: 1;
+      height: 250px;
+      background: white;
+      border: 2px solid #438ac8;
+      border-radius: 20px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-decoration: none;
+      color: #111827;
+
+      box-shadow: 0 8px 20px rgba(67, 138, 200, 0.15);
+
+      transition: all 0.3s ease;
+    }
+
+    /* Heading */
+    .role-box h2 {
+      margin: 0 0 15px;
+      color: #438ac8;
+      font-size: 30px;
+    }
+
+    /* Description */
+    .role-box p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    /* Hover effect */
+    .role-box:hover {
+      background: #438ac8;
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(67, 138, 200, 0.3);
+    }
+
+    .role-box:hover h2,
+    .role-box:hover p {
+      color: white;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 700px) {
+
+      .role-container {
+        flex-direction: column;
+        width: 85%;
+      }
+
+      .role-box {
+        height: 200px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <section class="role-section">
+
+    <div class="role-container">
+
+      <!-- Employee -->
+      <a href="employee sample.html" class="role-box">
+
+        <h2>Employee</h2>
+
+        <p>Access Employee Dashboard</p>
+
+      </a>
+
+
+      <!-- Manager -->
+      <a href="manager smaple.html" class="role-box">
+
+        <h2>Manager</h2>
+
+        <p>Access Manager Dashboard</p>
+
+      </a>
+
+    </div>
+
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Employee Dashboard - Smart Production Scheduler
+    </title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+
+        header {
+            background: #173b68;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 25px auto;
+        }
+
+
+        .welcome {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .welcome h2 {
+            color: #173b68;
+            margin-bottom: 8px;
+        }
+
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .card h3 {
+            color: #173b68;
+            margin-bottom: 10px;
+        }
+
+
+        .card p {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+
+        .section {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .section h2 {
+            color: #173b68;
+            margin-bottom: 18px;
+        }
+
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+
+        th {
+            background: #173b68;
+            color: white;
+        }
+
+
+        tr:nth-child(even) {
+            background: #f5f8fc;
+        }
+
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(230px, 1fr)
+                );
+
+            gap: 18px;
+        }
+
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+
+            border: 1px solid #bbb;
+            border-radius: 7px;
+
+            font-size: 15px;
+        }
+
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+
+        button {
+            background: #173b68;
+            color: white;
+
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            margin-top: 18px;
+        }
+
+
+        button:hover {
+            background: #0e294b;
+        }
+
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+
+        .available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+
+        .unavailable {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+
+        .completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+
+        .waiting {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+
+        .scheduled {
+            background: #d4edda;
+            color: #155724;
+        }
+
+
+        .empty {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+
+        footer {
+            text-align: center;
+
+            background: #173b68;
+
+            color: white;
+
+            padding: 15px;
+
+            margin-top: 30px;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .container {
+                width: 92%;
+            }
+
+            .section {
+                padding: 17px;
+            }
+
+            .card p {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        Smart Production Scheduler
+    </h1>
+
+    <p>
+        Employee Dashboard
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- WELCOME -->
+
+    <div class="welcome">
+
+        <h2>
+            Welcome, Employee
+        </h2>
+
+        <p>
+            View production orders generated by the Manager
+            and update machine and material information.
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                Total Orders
+            </h3>
+
+            <p id="totalOrders">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Waiting Orders
+            </h3>
+
+            <p id="pendingUpdates">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Scheduled Orders
+            </h3>
+
+            <p id="completedUpdates">
+                0
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- PRODUCTION ORDERS -->
+
+    <div class="section">
+
+        <h2>
+            Production Orders from Manager
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Order ID
+                        </th>
+
+                        <th>
+                            Order Name
+                        </th>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Processing Time
+                        </th>
+
+                        <th>
+                            Priority
+                        </th>
+
+                        <th>
+                            Preferred Machine
+                        </th>
+
+                        <th>
+                            Deadline
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="ordersTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMPLOYEE UPDATE -->
+
+    <div class="section">
+
+        <h2>
+            Submit Machine and Material Details
+        </h2>
+
+
+        <form id="employeeForm">
+
+
+            <div class="form-grid">
+
+
+                <!-- MACHINE -->
+
+                <div>
+
+                    <label for="machineName">
+
+                        Machine Name
+
+                    </label>
+
+
+                    <select
+                        id="machineName"
+                        required>
+
+
+                        <option value="">
+
+                            Select machine
+
+                        </option>
+
+
+                        <option value="Machine 1">
+
+                            Machine 1
+
+                        </option>
+
+
+                        <option value="Machine 2">
+
+                            Machine 2
+
+                        </option>
+
+
+                        <option value="Machine 3">
+
+                            Machine 3
+
+                        </option>
+
+
+                    </select>
+
+                </div>
+
+
+                <!-- CONDITION -->
+
+                <div>
+
+                    <label for="machineCondition">
+
+                        Machine Condition
+
+                    </label>
+
+
+                    <select
+                        id="machineCondition"
+                        required>
+
+
+                        <option value="">
+
+                            Select condition
+
+                        </option>
+
+
+                        <option value="Available">
+
+                            Available
+
+                        </option>
+
+
+                        <option value="Unavailable">
+
+                            Unavailable
+
+                        </option>
+
+
+                    </select>
+
+                </div>
+
+
+                <!-- MATERIAL -->
+
+                <div>
+
+                    <label for="materialName">
+
+                        Material Name
+
+                    </label>
+
+
+                    <select
+                        id="materialName"
+                        required>
+
+
+                        <option value="">
+
+                            Select material
+
+                        </option>
+
+
+                        <option value="Steel">
+
+                            Steel
+
+                        </option>
+
+
+                        <option value="Aluminium">
+
+                            Aluminium
+
+                        </option>
+
+
+                        <option value="Copper">
+
+                            Copper
+
+                        </option>
+
+
+                    </select>
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div>
+
+                    <label for="materialAvailability">
+
+                        Material Availability
+
+                    </label>
+
+
+                    <input
+                        type="number"
+                        id="materialAvailability"
+                        min="0"
+                        placeholder="Enter available quantity"
+                        required>
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="full-width">
+
+                    <label for="repairDetails">
+
+                        Additional Details
+
+                    </label>
+
+
+                    <textarea
+                        id="repairDetails"
+                        placeholder="Enter additional machine or material details"></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button type="submit">
+
+                Submit Update
+
+            </button>
+
+
+            <p
+                id="message"
+                class="message">
+            </p>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- GENERATED SCHEDULE -->
+
+    <div class="section">
+
+        <h2>
+            Generated Production Schedule
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Order ID
+                        </th>
+
+                        <th>
+                            Order Name
+                        </th>
+
+                        <th>
+                            Machine
+                        </th>
+
+                        <th>
+                            Start Time
+                        </th>
+
+                        <th>
+                            End Time
+                        </th>
+
+                        <th>
+                            Priority
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="updatesTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<footer>
+
+    <p>
+        Smart Production Scheduler © 2026
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* =====================================================
+       LOCAL STORAGE HELPERS
+    ===================================================== */
+
+    function getStorageArray(key, defaultValue = []) {
+        try {
+            const data = JSON.parse(localStorage.getItem(key));
+            return Array.isArray(data) ? data : defaultValue;
+        } catch (error) {
+            return defaultValue;
+        }
+    }
+
+
+    /* =====================================================
+       LOAD DATA
+    ===================================================== */
+
+    let productionOrders =
+        getStorageArray("productionOrders");
+
+    let productionSchedule =
+        getStorageArray("productionSchedule");
+
+    let employeeUpdates =
+        getStorageArray("employeeUpdates");
+
+    let productionMachines =
+        getStorageArray("productionMachines");
+
+
+    /* =====================================================
+       DEFAULT MACHINES
+    ===================================================== */
+
+    const defaultMachines = [
+        {
+            name: "Machine 1",
+            status: "Available",
+            load: 0
+        },
+        {
+            name: "Machine 2",
+            status: "Available",
+            load: 0
+        },
+        {
+            name: "Machine 3",
+            status: "Available",
+            load: 0
+        }
+    ];
+
+
+    /* =====================================================
+       INITIALIZE MACHINES
+    ===================================================== */
+
+    if (productionMachines.length === 0) {
+
+        productionMachines =
+            JSON.parse(
+                JSON.stringify(defaultMachines)
+            );
+
+        localStorage.setItem(
+            "productionMachines",
+            JSON.stringify(productionMachines)
+        );
+    }
+
+
+    /* =====================================================
+       GET HTML ELEMENTS
+    ===================================================== */
+
+    const ordersTable =
+        document.getElementById("ordersTable");
+
+    const updatesTable =
+        document.getElementById("updatesTable");
+
+    const totalOrders =
+        document.getElementById("totalOrders");
+
+    const pendingUpdates =
+        document.getElementById("pendingUpdates");
+
+    const completedUpdates =
+        document.getElementById("completedUpdates");
+
+    const employeeForm =
+        document.getElementById("employeeForm");
+
+    const message =
+        document.getElementById("message");
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* =====================================================
+       GET ORDER ID
+    ===================================================== */
+
+    function getOrderId(order, index) {
+
+        return (
+            order.id ||
+            order.orderId ||
+            order.orderID ||
+            `ORD-${index + 1}`
+        );
+    }
+
+
+    /* =====================================================
+       LOAD LATEST DATA
+    ===================================================== */
+
+    function loadLatestData() {
+
+        productionOrders =
+            getStorageArray("productionOrders");
+
+        productionSchedule =
+            getStorageArray("productionSchedule");
+
+        productionMachines =
+            getStorageArray(
+                "productionMachines",
+                defaultMachines
+            );
+
+        employeeUpdates =
+            getStorageArray("employeeUpdates");
+
+        displayOrders();
+
+        displayProductionSchedule();
+
+        updateCards();
+    }
+
+
+    /* =====================================================
+       DISPLAY MANAGER PRODUCTION ORDERS
+    ===================================================== */
+
+    function displayOrders() {
+
+        ordersTable.innerHTML = "";
+
+        if (productionOrders.length === 0) {
+
+            ordersTable.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty">
+                        No production orders available from Manager.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        productionOrders.forEach(function(order, index) {
+
+            const orderId =
+                getOrderId(order, index);
+
+            const product =
+                order.product ||
+                order.productName ||
+                "Not specified";
+
+            const quantity =
+                order.quantity ??
+                order.qty ??
+                "-";
+
+            const priority =
+                order.priority ||
+                "Normal";
+
+            const dueDate =
+                order.deadline ||
+                order.dueDate ||
+                "Not specified";
+
+            const machine =
+                order.machine ||
+                order.machineName ||
+                order.preferredMachine ||
+                "Not assigned";
+
+            const status =
+                order.status ||
+                "Pending";
+
+
+            ordersTable.innerHTML += `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(orderId)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(product)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(quantity)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(priority)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(dueDate)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(machine)}
+                    </td>
+
+                    <td>
+                        <span class="status pending">
+                            ${escapeHTML(status)}
+                        </span>
+                    </td>
+
+                </tr>
+            `;
+        });
+    }
+
+
+    /* =====================================================
+       DISPLAY GENERATED PRODUCTION SCHEDULE
+       
+       THIS IS THE SAME SCHEDULE USED BY MANAGER
+    ===================================================== */
+
+    function displayProductionSchedule() {
+
+        updatesTable.innerHTML = "";
+
+        productionSchedule =
+            getStorageArray("productionSchedule");
+
+
+        if (productionSchedule.length === 0) {
+
+            updatesTable.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty">
+                        No generated production schedule available.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        productionSchedule.forEach(function(item, index) {
+
+            const orderId =
+                item.orderId ||
+                item.id ||
+                `ORD-${index + 1}`;
+
+            const orderName =
+                item.orderName ||
+                item.product ||
+                "Not specified";
+
+            const product =
+                item.product ||
+                item.orderName ||
+                "Not specified";
+
+            const quantity =
+                item.quantity ??
+                item.qty ??
+                "-";
+
+            const priority =
+                item.priority ||
+                "Normal";
+
+            const dueDate =
+                item.dueDate ||
+                item.deadline ||
+                "-";
+
+            const machine =
+                item.machine ||
+                "No Available Machine";
+
+            const status =
+                item.status ||
+                "Scheduled";
+
+
+            let statusClass = "pending";
+
+
+            if (
+                status.toLowerCase().includes("complete")
+            ) {
+
+                statusClass = "completed";
+
+            }
+
+
+            if (
+                status.toLowerCase().includes("available")
+            ) {
+
+                statusClass = "available";
+
+            }
+
+
+            updatesTable.innerHTML += `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(orderId)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(orderName)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(quantity)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(priority)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(dueDate)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(machine)}
+                    </td>
+
+                    <td>
+
+                        <span class="status ${statusClass}">
+                            ${escapeHTML(status)}
+                        </span>
+
+                    </td>
+
+                </tr>
+            `;
+        });
+    }
+
+
+    /* =====================================================
+       UPDATE SUMMARY CARDS
+    ===================================================== */
+
+    function updateCards() {
+
+        totalOrders.textContent =
+            productionOrders.length;
+
+
+        const completed =
+            productionSchedule.filter(function(item) {
+
+                const status =
+                    String(
+                        item.status || ""
+                    ).toLowerCase();
+
+                return (
+                    status.includes("complete") ||
+                    status.includes("scheduled")
+                );
+
+            }).length;
+
+
+        const pending =
+            Math.max(
+                productionSchedule.length -
+                completed,
+                0
+            );
+
+
+        completedUpdates.textContent =
+            completed;
+
+        pendingUpdates.textContent =
+            pending;
+    }
+
+
+    /* =====================================================
+       EMPLOYEE FORM SUBMISSION
+    ===================================================== */
+
+    employeeForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            /* =============================================
+               MACHINE
+            ============================================= */
+
+            const machineName =
+                document.getElementById(
+                    "machineName"
+                ).value;
+
+
+            const machineCondition =
+                document.getElementById(
+                    "machineCondition"
+                ).value;
+
+
+            /* =============================================
+               MATERIAL
+            ============================================= */
+
+            const materialName =
+                document.getElementById(
+                    "materialName"
+                ).value;
+
+
+            const materialAvailability =
+                Number(
+                    document.getElementById(
+                        "materialAvailability"
+                    ).value
+                );
+
+
+            /* =============================================
+               DETAILS
+            ============================================= */
+
+            const repairDetails =
+                document.getElementById(
+                    "repairDetails"
+                ).value.trim();
+
+
+            const submittedTime =
+                new Date().toLocaleString();
+
+
+            /* =============================================
+               SAVE EMPLOYEE UPDATE
+            ============================================= */
+
+            const newUpdate = {
+
+                machineName:
+                    machineName,
+
+                machineCondition:
+                    machineCondition,
+
+                materialName:
+                    materialName,
+
+                materialAvailability:
+                    materialAvailability,
+
+                repairDetails:
+                    repairDetails,
+
+                submittedTime:
+                    submittedTime
+
+            };
+
+
+            employeeUpdates.push(
+                newUpdate
+            );
+
+
+            localStorage.setItem(
+                "employeeUpdates",
+                JSON.stringify(employeeUpdates)
+            );
+
+
+            /* =============================================
+               UPDATE MACHINE STATUS
+            ============================================= */
+
+            productionMachines =
+                getStorageArray(
+                    "productionMachines",
+                    defaultMachines
+                );
+
+
+            const machineData = {
+
+                name:
+                    machineName,
+
+                status:
+                    machineCondition,
+
+                condition:
+                    machineCondition,
+
+                load: 0,
+
+                updatedTime:
+                    submittedTime
+
+            };
+
+
+            const machineIndex =
+                productionMachines.findIndex(
+                    function(machine) {
+
+                        return (
+                            machine.name ===
+                            machineName
+                        );
+
+                    }
+                );
+
+
+            if (machineIndex !== -1) {
+
+                productionMachines[
+                    machineIndex
+                ] = machineData;
+
+            } else {
+
+                productionMachines.push(
+                    machineData
+                );
+            }
+
+
+            /* =============================================
+               SAVE MACHINE STATUS
+               
+               MANAGER DASHBOARD WILL READ THIS
+            ============================================= */
+
+            localStorage.setItem(
+                "productionMachines",
+                JSON.stringify(
+                    productionMachines
+                )
+            );
+
+
+            /* =============================================
+               UPDATE MATERIAL STATUS
+            ============================================= */
+
+            let productionMaterials =
+                getStorageArray(
+                    "productionMaterials"
+                );
+
+
+            const materialData = {
+
+                name:
+                    materialName,
+
+                quantity:
+                    materialAvailability,
+
+                unit:
+                    "kg",
+
+                status:
+                    materialAvailability > 0
+                        ? "Available"
+                        : "Out of Stock",
+
+                updatedTime:
+                    submittedTime
+
+            };
+
+
+            const materialIndex =
+                productionMaterials.findIndex(
+                    function(material) {
+
+                        return (
+                            material.name ===
+                            materialName
+                        );
+
+                    }
+                );
+
+
+            if (materialIndex !== -1) {
+
+                productionMaterials[
+                    materialIndex
+                ] = materialData;
+
+            } else {
+
+                productionMaterials.push(
+                    materialData
+                );
+            }
+
+
+            localStorage.setItem(
+                "productionMaterials",
+                JSON.stringify(
+                    productionMaterials
+                )
+            );
+
+
+            /* =============================================
+               SUCCESS MESSAGE
+            ============================================= */
+
+            message.textContent =
+                machineName +
+                " updated to " +
+                machineCondition +
+                ". Manager dashboard will receive the update.";
+
+            message.style.color =
+                "green";
+
+
+            employeeForm.reset();
+
+
+            /* =============================================
+               REFRESH EMPLOYEE PAGE
+            ============================================= */
+
+            loadLatestData();
+
+        }
+    );
+
+
+    /* =====================================================
+       STORAGE EVENT
+       
+       THIS IS VERY IMPORTANT.
+       
+       When Manager changes data in another browser tab,
+       Employee Dashboard automatically receives it.
+    ===================================================== */
+
+    window.addEventListener(
+        "storage",
+        function(event) {
+
+            if (
+                event.key ===
+                "productionOrders"
+            ) {
+
+                productionOrders =
+                    getStorageArray(
+                        "productionOrders"
+                    );
+
+                displayOrders();
+
+                updateCards();
+            }
+
+
+            if (
+                event.key ===
+                "productionSchedule"
+            ) {
+
+                productionSchedule =
+                    getStorageArray(
+                        "productionSchedule"
+                    );
+
+                displayProductionSchedule();
+
+                updateCards();
+            }
+
+
+            if (
+                event.key ===
+                "productionMachines"
+            ) {
+
+                productionMachines =
+                    getStorageArray(
+                        "productionMachines",
+                        defaultMachines
+                    );
+            }
+
+
+            if (
+                event.key ===
+                "productionMaterials"
+            ) {
+
+                console.log(
+                    "Material status updated."
+                );
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       INITIAL LOAD
+    ===================================================== */
+
+    loadLatestData();
+
+</script>
+
+</body>
+
+</html>
